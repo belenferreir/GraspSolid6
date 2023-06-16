@@ -62,5 +62,43 @@ namespace Full_GRASP_And_SOLID
 
             return result;
         }
+
+        private bool cooked = false;
+        public bool Cooked 
+        {
+            get 
+            {
+                return cooked;
+            }
+        }
+        
+        public int GetCookTime()
+        {
+            int totalTime = 0;
+            foreach (BaseStep step in this.steps)
+            {
+                totalTime = totalTime + step.Time;
+            }
+            return totalTime;
+        }
+
+        public void GetCooked()
+        {
+            this.cooked = true;
+        }
+        public void Cook()
+        {
+            if (Cooked == false)
+            {
+                RecipeTimer timer = new RecipeTimer(this);
+                timer.RegisterTimer();
+            }
+        }
     }
 }
+
+//Single Responsibility Principle: La clase tiene una única responsabilidad, la cual es representar una receta.
+
+//Expert: Los métodos GetCookTime() y GetCooked() tiene el conocimiento necesario para obtener información sobre el tiempo y estado de la cocción.
+
+//Encapsulamiento: La variable cooked está oculta en una propiedad de solo lectura Cooked, y su estado se modifica a través del método GetCooked()
